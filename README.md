@@ -4,6 +4,11 @@ Overview
 This repository contains open datasets of neural recordings from the auditory cortex of rats, obtained during experiments using the oddball paradigm. The data aims to explore how the brain processes predictable versus unexpected auditory stimuli.
 Dataset Description
 The dataset includes multi-unit recordings of neuronal activity during the presentation of standard and deviant tones. The data is categorized by stimulus type and cortical sub-region.
+
+Current Status
+
+This dataset is in the early stage of development. Future updates will include more detailed analysis and additional data.
+
 Files Included
 
     xxxx.csv: The main dataset containing early low processed data of neuronal spike times and related metadata.
