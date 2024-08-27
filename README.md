@@ -15,14 +15,38 @@ Files Included
     Metadataxxx: Details of the experimental setup and recording parameters.
     README.md: This document.
 
-Columns in neural_data.csv
+Columns in neural_data.csv:
 
-    spike_times: Timestamps of neuronal spikes.
-    stimulus_type: Type of stimulus (standard, deviant, after_deviant).
-    DIVISION: Sub-region within the auditory cortex.
-    ID: Unique identifier for each recording session.
-    Cluster: Clustering information derived from spike train analysis.
-    cat: Category of the stimulus condition.
+spike: The time (in seconds) relative to the onset of the acoustic stimulus during a trial when a neuronal spike was recorded. If no spikes were recorded in a trial, this column contains NaN as a placeholder.
+
+trial: The number identifying each trial within the experiment. A trial represents a single presentation of an acoustic stimulus.
+
+frec: The frequency (in kHz) of the auditory stimulus presented during the trial.
+
+condition: Encoded marker indicating the type of stimulus: 1 for standard tones and 2 for deviant tones.
+
+animal: A code representing the subject (rat) in the experiment, composed of an animal number and the year.
+
+tract: An identifier for the electrode tract; multiple neurons may have been recorded from a single tract.
+
+neuron: The identifier for the specific neuron recorded during the experiment.
+
+unit: The unit of analysis, referring to the individual neuron or neural cluster recorded.
+
+oddball: Describes the two-tone sequence where one tone serves as the standard and the other as the deviant, with roles reversed in a secondary sequence.
+
+DIVISION: Indicates the sub-structure within the auditory cortex where the neuron was recorded.
+
+DEPTH (Z): The depth (in micrometers) of the electrode in the brain relative to the cortical surface, providing a measure of vertical positioning.
+
+X (Rostro-Caudal): The rostro-caudal position (in micrometers) of the recording site within the cortex.
+
+Y: The medio-lateral position (in micrometers) of the recording site within the cortex.
+
+BF (kHz): The best frequency, defined as the frequency at which the neuron exhibits the highest response, measured in kHz.
+
+TF (dBs): The threshold frequency, representing the lowest sound intensity level (in dBs) that elicits a response from the neuron.
+
 
 Metadata
 
