@@ -1,0 +1,114 @@
+{
+    "dataset_title": "Neural Responses to Auditory Oddball Paradigm in Rat Auditory Cortex",
+    "doi": "To be assigned upon publication",
+    "authors": [
+        {
+            "name": "Pablo Vázquez-Borsetti",
+            "affiliation": "Institute of Cell Biology and Neurosciences (IBCN), CONICET, Buenos Aires, Argentina"
+        },
+        {
+            "name": "Manuel S. Malmierca",
+            "affiliations": [
+                "Cognitive and Auditory Neuroscience Laboratory (Lab 1), INCYL, University of Salamanca, Spain",
+                "Institute for Biomedical Research of Salamanca (IBSAL), Spain",
+                "Department of Cell Biology and Pathology, Faculty of Medicine, University of Salamanca, Spain"
+            ]
+        },
+        {
+            "name": "David Pérez-González",
+            "affiliations": [
+                "Cognitive and Auditory Neuroscience Laboratory (Lab 1), INCYL, University of Salamanca, Spain",
+                "Department of Basic Psychology, Psychobiology and Methodology of Behavioral Sciences, Faculty of Psychology, University of Salamanca, Spain"
+            ],
+            "corresponding_author": True,
+            "email": "davidpg@usal.es"
+        }
+    ],
+    "license": "CC-BY 4.0",
+    "keywords": [
+        "Auditory cortex",
+        "Extracellular electrophysiology",
+        "Deviance detection",
+        "Acetylcholine",
+        "Stimulus-specific adaptation"
+    ],
+    "subjects": {
+        "species": "Rattus norvegicus",
+        "strain": "Sprague-Dawley",
+        "sample_size": 37,
+        "weight_or_age": "Not specified",
+        "anesthesia": "Not specified"
+    },
+    "recording_setup": {
+        "region": "Auditory cortex",
+        "electrode_type": "tungsten electrode (1–3 MΩ)",
+         }
+    },
+    "stimulus_design": {
+        "oddball_paradigm": {
+            "standard_tone": "90% probability, frequency defined per trial",
+            "deviant_tone": "10% probability, alternates in oddball column"
+        },
+        "tone_parameters": {
+            "duration_ms": 75,
+            "intensity": "variable",
+            
+        },
+       
+    },
+    "data_description": {
+    "files": [
+        "df_aver_with_S_D_AD.csv",
+        "odd_data_with_AD.csv",
+        "oddball_dataset.csv"
+    ],
+    "columns": {
+        "df_aver_with_S_D_AD.csv": [
+            "cat", "ms", "S_counts", "trials", "freq", "condition", "animal", "oddball", "tract", 
+            "neuron", "merged_column", "unit", "animal_unit", "division", "depth (Z)", 
+            "BF (kHz)", "MT (dB)", "rostrocaudal (X)", "mediolateral (Y)", "block_type", 
+            "Metadata", "cat2", "FR(s)", "FR_agg", "mean_standard_FR(s)", "FR_norm", "level_1"
+        ],
+        "odd_data_with_AD.csv": [
+            "spikes", "trial", "freq", "condition", "animal", "oddball", "tract", "neuron", 
+            "merged_column", "unit", "animal_unit", "division", "depth (Z)", "BF (kHz)", 
+            "MT (dB)", "rostrocaudal (X)", "mediolateral (Y)", "block_type",
+            "cat", "cat2"
+        ],
+        "oddball_dataset.csv": [
+            "spikes", "trial", "freq", "condition", "animal", "oddball", "tract", "neuron", 
+            "merged_column", "unit", "animal_unit", "division", "depth (Z)", "BF (kHz)", 
+            "MT (dB)", "rostrocaudal (X)", "mediolateral (Y)", "block_type", 
+        ]
+    },
+    "key_variables": {
+        "spikes": "Time of neuronal spike relative to stimulus onset (s)",
+        "trial": "Trial identifier",
+        "freq": "Frequency of presented tone (kHz)",
+        "condition": "Stimulus type: 1 (standard), 2 (deviant)",
+        "animal": "Unique subject ID",
+        "division": "Cortical sub-region (e.g., A1, AAF)",
+        "BF (kHz)": "Neuron’s best frequency (kHz)",
+        "MT (dB)": "Minimum threshold for response (dB SPL)",
+        "depth (Z)": "Depth relative to cortical surface (µm)",
+        "rostrocaudal (X)": "Stereotaxic rostro-caudal coordinate (µm)",
+        "mediolateral (Y)": "Stereotaxic medio-lateral coordinate (µm)",
+        "block_type": "Experimental block type (e.g., control/effect)",
+        "FR(s)": "Firing rate (Hz) in a given analysis window",
+        "FR_norm": "Normalized firing rate",
+        "S_counts": "Spike counts",
+        "trials": "Number of trials per condition",
+        "cat": "Condition category (e.g., standard, deviant, after-deviant)",
+        "cat2": "Secondary categorization (custom)",
+        "ms": "Time bin or millisecond window label"
+    }
+}
+    
+    "usage_notes": {
+        "recommended_tools": ["Python", "R"],
+        "citation": "To be completed upon publication"
+    },
+    "ethics": {
+        "approval": "The experimental protocols were approved conforming to the University of Salamanca Animal Care Committee standards and the European Union (Directive 2010/63/EU) for the use of animals in neuroscience research"
+    }
+}
