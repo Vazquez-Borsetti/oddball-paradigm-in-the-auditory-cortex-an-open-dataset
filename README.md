@@ -22,7 +22,7 @@ Open dataset of multi-unit recordings from the rat auditory cortex during oddbal
 - **Species**: *Rattus norvegicus* (Sprague-Dawley)  
 - **Sample**: 37 rats  
 - **Ethics**: Approved per University of Salamanca Animal Care Committee and EU Directive 2010/63/EU  
-
+- **Anesthesia**: induced and maintained with urethane (1.5 g/kg, intraperitoneal), with additional doses as needed. Dexamethasone and atropine sulfate were administered at the start of surgery to reduce brain edema and bronchial secretions.
 ### Stimulus Parameters
 | Parameter       | Value          |
 |-----------------|----------------|

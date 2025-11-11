@@ -27,6 +27,8 @@ fign=0
 
 
 
+
+
 def average_oddball(df):
     df_average = pd.DataFrame()
 
@@ -170,11 +172,28 @@ def pdf_rasters(df):
     print("Se han guardado todas las figuras en", pdf_filename)
 
 
-def SD_panel_1_combined(df, neuron_list):
+def SD_panel_1_combined(df, neuron_list):# figure 3 function
     # Configuración de figura principal (figure 3)
     fig = plt.figure(figsize=(10, 8 + 3*len(neuron_list)))  # Más espacio vertical
     gs_main = gridspec.GridSpec(1, len(neuron_list), figure=fig, wspace=0.3)  # Separación entre columnas de neuronas
+    # --- Titles ---
+    fig.text(0.31, 0.95, "Neuron 21_023_6-1", ha='center', va='bottom', fontsize=12)#, fontweight='bold'
+    fig.text(0.75, 0.95, "Neuron 21_023_8-1", ha='center', va='bottom', fontsize=12)#, fontweight='bold'
+
+        # --- Encabezados de tonos (centrados arriba de cada columna) ---
+    fig.text(0.21, 0.9, "Tone 1 → standard\nTone 2 → deviant", 
+             ha='center', va='bottom', fontsize=10, style='italic')
     
+    fig.text(0.38, 0.9, "Tone 2 → standard\nTone 1 → deviant", 
+             ha='center', va='bottom', fontsize=10, style='italic')
+    
+    fig.text(0.62, 0.9, "Tone 1 → standard\nTone 2 → deviant", 
+             ha='center', va='bottom', fontsize=10, style='italic')
+    
+    fig.text(0.82, 0.9, "Tone 2 → standard\nTone 1 → deviant", 
+             ha='center', va='bottom', fontsize=10, style='italic')
+
+
     for idx, neuron in enumerate(neuron_list):
         neuron_data = df[df['animal_unit'] == neuron]
         
@@ -185,7 +204,7 @@ def SD_panel_1_combined(df, neuron_list):
         
         # Paneles
         plot_raster_subpanel(neuron_data, 'control_block_1', 'control_block_2', gs_sub, [0, 1], 'CTL')
-        plot_raster_subpanel(neuron_data, 'effect_block_1', 'effect_block_2', gs_sub, [2, 3], 'ACH')
+        plot_raster_subpanel(neuron_data, 'effect_block_1', 'effect_block_2', gs_sub, [2, 3], 'ACh')
         plot_raster_subpanel(neuron_data, 'rec_block_1', 'rec_block_2', gs_sub, [4, 5], 'REC', xlabel=True)
 
     # Ajustes finales
@@ -221,11 +240,12 @@ def plot_raster_subpanel(df, block1, block2, gs_sub, rows, label, xlabel=False):
             
         ax.margins(x=0.02, y=0.05)
 
-    # Etiquetas
-    ax1.set_ylabel('Count/trial', fontsize=9, labelpad=2)  # Reducir padding
+    # Etiquetas verticales solo en columnas izquierdas (ax1 y ax2)
+    ax1.set_ylabel('Count/trial', fontsize=9, labelpad=2)
+    ax2.set_ylabel('Trial #', fontsize=9, labelpad=2)
     if xlabel:
-        ax2.set_xlabel('Trial Window, s', fontsize=9, labelpad=2)
-        ax4.set_xlabel('Trial Window, s', fontsize=9, labelpad=2)
+        ax2.set_xlabel('Time (s)', fontsize=9, labelpad=2)
+        ax4.set_xlabel('Time (s)', fontsize=9, labelpad=2)
     
     # Texto de la etiqueta
     ax1.text(0.95, 0.88, label, transform=ax1.transAxes, 
@@ -237,41 +257,44 @@ def figure_1_rasters_SD(df):
     fig = plt.figure(figsize=(15, 20))
     # Create a GridSpec with 6 rows and 2 columns
     gs = gridspec.GridSpec(6, 2, figure=fig)
+    fig.subplots_adjust(hspace=0.6, wspace=0.4)
+
     
     # Panel 1
     df_control_1 = df[df['block_type'] == 'control_block_1']
     df_control_2 = df[df['block_type'] == 'control_block_2']
     ax1_1 = fig.add_subplot(gs[0, 0])
-    ax1_1.set_ylabel('Count/trial', fontsize=11)
     ax1_2 = fig.add_subplot(gs[1, 0])
     ax1_3 = fig.add_subplot(gs[0, 1])
     ax1_4 = fig.add_subplot(gs[1, 1])
     plot_raster(df_control_1, ax1_1, ax1_2)
     plot_raster(df_control_2, ax1_3, ax1_4)
     ax1_1.text(0.9, 0.95, 'CTL', transform=ax1_1.transAxes, fontsize=14, va='top', ha='right')
-
+    ax1_1.set_ylabel('Count/trial', fontsize=11)
     # Panel 2
     df_effect_1 = df[df['block_type'] == 'effect_block_1']
     df_effect_2 = df[df['block_type'] == 'effect_block_2']
     ax2_1 = fig.add_subplot(gs[2, 0])
     ax2_1.set_ylabel('Count/trial', fontsize=11)
+    
     ax2_2 = fig.add_subplot(gs[3, 0])
     ax2_3 = fig.add_subplot(gs[2, 1])
     ax2_4 = fig.add_subplot(gs[3, 1])
     plot_raster(df_effect_1, ax2_1, ax2_2)
     plot_raster(df_effect_2, ax2_3, ax2_4)
-    ax2_1.text(0.9, 0.95, 'ACH', transform=ax2_1.transAxes, fontsize=14, va='top', ha='right')
-
+    ax2_1.text(0.9, 0.95, 'ACh', transform=ax2_1.transAxes, fontsize=14, va='top', ha='right')
+    ax2_2.set_ylabel('Trial #', fontsize=11)
     # Panel 3
     df_rec_1 = df[df['block_type'] == 'rec_block_1']
     df_rec_2 = df[df['block_type'] == 'rec_block_2']
     ax3_1 = fig.add_subplot(gs[4, 0])
     ax3_1.set_ylabel('Count/trial', fontsize=11)
+    ax1_2.set_ylabel('Trial #', fontsize=11)
     ax3_2 = fig.add_subplot(gs[5, 0])
-    ax3_2.set_xlabel('Trial Window, s', fontsize=11)
+    #ax3_2.set_xlabel('Trial Window: 0.25 s', fontsize=11)
     ax3_3 = fig.add_subplot(gs[4, 1])
     ax3_4 = fig.add_subplot(gs[5, 1])
-    ax3_4.set_xlabel('Trial Window, s', fontsize=11)
+    #ax3_4.set_xlabel('Trial Window: 0.25 s', fontsize=11)
     plot_raster(df_rec_1, ax3_1, ax3_2)
     plot_raster(df_rec_2, ax3_3, ax3_4)
     ax3_1.text(0.9, 0.95, 'REC', transform=ax3_1.transAxes, fontsize=14, va='top', ha='right')
@@ -281,7 +304,8 @@ def figure_1_rasters_SD(df):
     for ax in fig.axes:
         ax.set_xlim(-0.01, 0.26)  # Fijar el rango global para todos los ejes
         ax.margins(x=0, y=0.1)  # Márgenes adicionales en y, pero no en x
-
+        #ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.3f}"))
+        #ax.set_yticks(np.round(np.linspace(0, 0.25, 6), 2))
     # Display and return the figure
     plt.show()
     return fig
@@ -320,8 +344,6 @@ def plot_raster(oddball_df,ax1, ax2):
     standard_weights = np.ones_like(standard_spike_times) / len(standard_spike_times)
     deviant_weights = np.ones_like(deviant_spike_times) / len(deviant_spike_times)
     after_deviant_weights = np.ones_like(after_deviant_spike_times) / len(after_deviant_spike_times)
-    # weights=[standard_weights,deviant_weights,after_deviant_weights]
-    # sns.histplot(data=oddball_df, x='spikes', hue='cat', bins=10,weights=weights, multiple='dodge', shrink=0.8)
     
     # Plot histograms
     ax1.hist(standard_spike_times, bins=num_bins, color='blue',range=common_range, weights=standard_weights, histtype='step', lw=1.5)
@@ -336,7 +358,11 @@ def plot_raster(oddball_df,ax1, ax2):
     ax1.axvline(x=0.0, color='black', linestyle='-', alpha=0.5)
     ax1.axvline(x=0.075, color='black', linestyle='--', alpha=0.5)
     
-    ax1.yaxis.set_major_locator(MaxNLocator(integer=True))
+    #ax1.yaxis.set_major_locator(MaxNLocator(integer=True))
+    # Remove x-axis numbers and label from raster
+    ax1.set_xticklabels([])
+    ax1.set_xlabel('')
+    ax1.tick_params(axis='x', length=0)
     # Get trial numbers and spike times for raster plot
     standard_trial_numbers = standard_spikes['trial']
     deviant_trial_numbers = deviant_spikes['trial']
@@ -345,12 +371,19 @@ def plot_raster(oddball_df,ax1, ax2):
     ax2.plot(standard_spike_times, standard_trial_numbers, 'b.', markersize=3)
     ax2.plot(deviant_spike_times, deviant_trial_numbers, 'r.', markersize=3)
     ax2.plot(after_deviant_spike_times, after_deviant_trial_numbers, 'g.', markersize=3)
+    
     # Customize the raster plot
     ax2.axis('tight')
-    
     ax2.axvline(x=0.0, color='black', linestyle='-', alpha=0.5)
     ax2.axvline(x=0.075, color='black', linestyle='--', alpha=0.5)
     ax2.yaxis.set_major_locator(MaxNLocator(integer=True))
+    
+    
+
+        # Format x-axis tick labels with 2 decimal places
+    ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.3f}"))
+    #ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.3f}"))
+
 
     
     plt.show()
@@ -473,9 +506,7 @@ def correl_matrix(df):
     correlation_rec = calculate_correlation_matrix(df_rec)
     # Crear máscara para ocultar triángulo superior
     mask = np.triu(np.ones_like(correlation_control, dtype=bool))
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    import matplotlib.gridspec as gridspec
+    
     
     # Crear figura con GridSpec y un eje extra para la barra
     fig = plt.figure(figsize=(18, 6))
@@ -483,7 +514,7 @@ def correl_matrix(df):
     axes = [fig.add_subplot(gs[0, i]) for i in range(3)]
     cax = fig.add_subplot(gs[0, 3])
     
-    titles = ["Control", "ACH", "Recovery"]
+    titles = ["Control", "ACh", "Recovery"]
     correlation_matrices = [correlation_control, correlation_effect, correlation_rec]
     
     # Calcular límites comunes de colores
@@ -517,15 +548,54 @@ def correl_matrix(df):
             ax.plot([0, min(y, n)], [y, y], color="black", linewidth=1, zorder=3)
             # Vertical: desde la diagonal hacia abajo
             ax.plot([y, y], [y, n], color="black", linewidth=1, zorder=3)
-    
+            
+        
+        # Coordenadas para los nombres y líneas guía fuera del eje
+        y_pos = -0.15  # un poco debajo del eje (puede ajustarse)
+        
+        # Líneas negras hacia afuera
+        ax.plot([0.0, 0.26], [y_pos + 0.02, y_pos + 0.02], color='black', transform=ax.transAxes, clip_on=False)
+        ax.plot([0.28, 0.54], [y_pos + 0.02, y_pos + 0.02], color='black', transform=ax.transAxes, clip_on=False)
+        ax.plot([0.56, 0.82], [y_pos + 0.02, y_pos + 0.02], color='black', transform=ax.transAxes, clip_on=False)
+        
+        # Nombres debajo de las líneas
+        ax.text(0.135, y_pos, "Standard", transform=ax.transAxes,
+                ha='center', va='center', fontsize=10, color='black', weight='bold')
+        
+        ax.text(0.4, y_pos, "Deviant", transform=ax.transAxes,
+                ha='center', va='center', fontsize=10, color='black', weight='bold')
+        
+        ax.text(0.68, y_pos, "After-deviant", transform=ax.transAxes,
+                ha='center', va='center', fontsize=10, color='black', weight='bold')
         
         # Solo mostrar etiquetas verticales en el primer subplot
         if i != 0:
             ax.set_yticklabels([])
+        # Etiquetas en el eje Y, solo para el primer subplot
+        # Etiquetas en el eje Y, solo para el primer subplot
+        if i == 0:
+            x_pos = -0.12  # posición más cerca del gráfico
+            dx = 0.01     # separación entre línea y texto (coherente con eje X)
+        
+            # Líneas negras verticales (ordenadas de arriba hacia abajo y más arriba)
+            ax.plot([x_pos + 0.01, x_pos + 0.01], [0.74, 0.99], color='black', transform=ax.transAxes, clip_on=False)
+            ax.plot([x_pos + 0.01, x_pos + 0.01], [0.46, 0.71], color='black', transform=ax.transAxes, clip_on=False)
+            ax.plot([x_pos + 0.01, x_pos + 0.01], [0.18, 0.43], color='black', transform=ax.transAxes, clip_on=False)
+        
+            # Nombres junto a las líneas (distancia pareja y más arriba)
+            ax.text(x_pos - dx, 0.865, "Standard", transform=ax.transAxes,
+                    ha='center', va='center', fontsize=10, color='black', weight='bold',
+                    rotation=90, clip_on=False)
+            ax.text(x_pos - dx, 0.6, "Deviant", transform=ax.transAxes,
+                    ha='center', va='center', fontsize=10, color='black', weight='bold',
+                    rotation=90, clip_on=False)
+            ax.text(x_pos - dx, 0.31, "After-deviant", transform=ax.transAxes,
+                    ha='center', va='center', fontsize=10, color='black', weight='bold',
+                    rotation=90, clip_on=False)
+
     
-        ax.tick_params(labelsize=10)
     
-    # Agregar barra de color única sin superponer nada
+    
     fig.colorbar(ims[0].collections[0], cax=cax)
     
     # Ajustar espacios automáticamente
@@ -533,40 +603,6 @@ def correl_matrix(df):
 
 
 
-   # # Crear figura para los heatmaps
-   #  fig, axes = plt.subplots(1, 3, figsize=(18, 6), constrained_layout=True)
-   #  titles = ["Control", "ACH", "Recovery"]
-   #  correlation_matrices = [correlation_control, correlation_effect, correlation_rec]
-    
-   #  # Crear heatmaps
-   #  for i, (ax, matrix, title) in enumerate(zip(axes, correlation_matrices, titles)):
-   #      # Mostrar el heatmap
-   #      sns.heatmap(
-   #          matrix, 
-   #          cmap='coolwarm', 
-   #          center=0, 
-   #          linewidths=0.5, 
-   #          ax=ax, 
-   #          cbar=True, 
-   #          annot=False,
-   #          yticklabels=True  # Forzar que se muestren los nombres de filas
-   #      )
-        
-   #      ax.set_title(title, fontsize=12, weight='bold')
-        
-   #      # Líneas negras de separación
-   #      for y in [10, 20, 30]:
-   #          ax.axhline(y=y, color='black', linewidth=1)
-   #          ax.axvline(x=y, color='black', linewidth=1)
-        
-   #      # Solo mostrar labels verticales en el primer subplot
-   #      if i != 0:
-   #          ax.set_yticklabels([])  # Oculta los nombres de filas en los subplots 2 y 3
-    
-   #      ax.tick_params(labelsize=10)
-    
-    # Mostrar figura
-    #plt.suptitle("Correlation Matrices Across Block Types", fontsize=16, weight='bold')
     plt.savefig("correlation_matrices.pdf", format="pdf", bbox_inches="tight")
     plt.savefig("correlation_matrices.tif", dpi=300, bbox_inches="tight")
     plt.show()
@@ -688,7 +724,7 @@ def figure4(df):
     #plt.axvline(0, color='gray', linestyle='--', alpha=0.8)
     plt.title('Distribution of Normalized Differences in Firing Rate by Stimulation Type', pad=20)
     plt.xlabel('Normalized Differences (Control - ACh)/(Control + ACh)', fontsize=12)
-    plt.ylabel('Density', fontsize=12)
+    plt.ylabel('Neurons', fontsize=12)
     plt.grid(alpha=0.2)
     
     # Ajustar la leyenda correctamente

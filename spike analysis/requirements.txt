@@ -1,0 +1,6 @@
+matplotlib==3.9.2
+numpy
+openpyxl
+pandas
+scipy
+tdt==0.7.2

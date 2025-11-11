@@ -37,7 +37,7 @@
         "strain": "Sprague-Dawley",
         "sample_size": 37,
         "weight_or_age": "Not specified",
-        "anesthesia": "Not specified"
+        "anesthesia": "urethane (1.5 g/kg, intraperitoneal), with additional doses as needed. Dexamethasone and atropine sulfate were administered at the start of surgery to reduce brain edema and bronchial secretions."
     },
     "recording_setup": {
         "region": "Auditory cortex",
