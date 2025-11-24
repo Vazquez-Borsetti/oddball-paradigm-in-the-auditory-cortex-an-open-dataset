@@ -23,6 +23,7 @@ Open dataset of multi-unit recordings from the rat auditory cortex during oddbal
 - **Sample**: 37 rats  
 - **Ethics**: Approved per University of Salamanca Animal Care Committee and EU Directive 2010/63/EU  
 - **Anesthesia**: induced and maintained with urethane (1.5 g/kg, intraperitoneal), with additional doses as needed. Dexamethasone and atropine sulfate were administered at the start of surgery to reduce brain edema and bronchial secretions.
+- **Acetylcholine infusion**: One of the barrels was filled with saline solution for current compensation (165 mM NaCl) whereas the other barrels were filled with 1 M acetylcholine chloride (Sigma, catalog no. A6625) as a concentration previously used in similar electrophysiological studies (Ayala & Malmierca, 2015; Farley et al., 1983; Habbicht & Vater, 1996). Drugs were retained by applying a -15 nA current, and were ejected when required, typically using 30–40 nA currents for 8–10 minutes, until an effect was observed, using a microiontophoresis apparatus (Neurophore BH- 2 System, Harvard Apparatus). 
 ### Stimulus Parameters
 | Parameter       | Value          |
 |-----------------|----------------|

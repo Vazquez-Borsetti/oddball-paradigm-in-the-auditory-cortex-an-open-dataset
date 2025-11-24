@@ -15,7 +15,7 @@ def data_estractor(BLOCK_PATH):
     SORTCODE = 0          # set to 0 to use all sorts
     TRANGE = [-0.0, 0.25]
 
-    
+    #BLOCK_PATH = '1-3-ODD-10-9-C1'
     # import data block into Python structure
     data = tdt.read_block(BLOCK_PATH) #,  export= 'csv') #evtype=['epocs', 'snips', 'scalars'], sortname=SORTID, channel=CHANNEL, nodata=1)
     try:
@@ -99,8 +99,13 @@ def data_estractor(BLOCK_PATH):
         dfc = pd.DataFrame()
         dfc['spikes']=pd.Series(all_x)
         dfc['trial']=pd.Series(all_y)
+        unique_vals = pd.Series(all_frec).dropna().unique()
+        if len(unique_vals) == 1:
+            print("OK: hay un único valor:", unique_vals[0])
+        else:
+            raise ValueError(f"ATENCIÓN: hay más de un valor en all_frec: {unique_vals}")
         dfc['frec']=pd.Series(all_frec)
-
+        dfc['frec'] = dfc['frec'].fillna(unique_vals[0])
         dfc['condition']=cond
         print(dfc.head(20))
         print(dfc.shape)
@@ -118,9 +123,9 @@ def data_estractor(BLOCK_PATH):
     return dft
     
 # # #print(data.streams)
-# data_frame_TEST=data_estractor('electro/TANKS/21_021/7-3-ODD-5-6-F1')
+#data_frame_TEST=data_estractor('electro/TANKS/22_021/5-1-ODD-10-9-F4')
 # # # # # path
 # #data_frame_TEST=data_estractor('electro/TANKS/18_048/1-3-ASC-1-2-C1')
 
-# print(data_frame_TEST.head())
+#print(data_frame_TEST.head())
 # # # data_frame_final.to_csv('19_035_1-1-ASC-8-9-C1_ASC.csv',index=False)

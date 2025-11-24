@@ -64,7 +64,7 @@ def average_oddball(df):
 
         # Acumular resultados
         df_average = pd.concat([df_average, df_average_odd], ignore_index=True)
-
+        df_average = df_average.drop(columns='level_1', errors='ignore')
     return df_average
 
 
@@ -89,12 +89,12 @@ def rangos(df_raw_odd):
         df_raw_odd_piv.rename(columns={0: 'S_counts'}, inplace=True)
     else:
         # Asignar rangos temporales
-        df_raw_odd['ms'] = pd.cut(df_raw_odd['spikes'], bins=10, labels=labels)
+        df_raw_odd['s'] = pd.cut(df_raw_odd['spikes'], bins=10, labels=labels)
         
         # Crear tabla pivote asegurando todas las categorías y bins
         df_raw_odd_piv = df_raw_odd.pivot_table(
             index='cat',
-            columns='ms',
+            columns='s',
             aggfunc='size',
             fill_value=0,
             observed=True
@@ -121,7 +121,7 @@ def rangos(df_raw_odd):
     )
     
     # Eliminar columnas temporales y conservar metadata
-    cols_to_drop = ['spikes', 'trial', 'ms', 'cat']
+    cols_to_drop = ['spikes', 'trial', 's', 'cat']
     metadata_columns = [col for col in original_columns if col not in cols_to_drop]
     metadata = df_raw_odd[metadata_columns].iloc[0].to_dict()
     
@@ -444,13 +444,14 @@ def after_deviant(df):
         counts_by_trial = pd.concat( [group_S,group_D,group_AD], ignore_index=True)
         
         df_with_S_D_AD=pd.concat([df_with_S_D_AD,counts_by_trial])
-        
+        df_with_S_D_AD = df_with_S_D_AD.drop(columns='level_1', errors='ignore')
+
     return df_with_S_D_AD
 
 def calculate_correlation_matrix(subset_df):
     #print(subset_df.head())
     # Crear pivot table
-    pivot_df = subset_df.pivot_table(index='merged_column', columns='ms', values='FR_norm')
+    pivot_df = subset_df.pivot_table(index='merged_column', columns='s', values='FR_norm')
     #print(pivot_df)
     # Filtrar filas que NO son todos ceros
     pivot_df = pivot_df.loc[~(pivot_df == 0).all(axis=1)]
@@ -461,7 +462,7 @@ def calculate_correlation_matrix(subset_df):
     merged_df = merged_df.select_dtypes(include=["number"])
     #print(merged_df)
     # Eliminar columnas no necesarias
-    merged_df = merged_df.drop(columns=["FR_agg", "ms", "S_counts", "trials", 
+    merged_df = merged_df.drop(columns=["FR_agg", "s", "S_counts", "trials", 
                                          "condition", "tract", "FR_norm", "FR(s)", "mean_FR(s)",
                                        'mean_standard_FR(s)',             'level_1'], errors='ignore')
     #print ('GGGGGGGGGGGGG')
@@ -484,14 +485,14 @@ def correl_matrix(df):
     #print('***********************')
     #print(df_balanced.head())
     
-    # Ajustar valores de la columna 'ms'
-    df_balanced['ms'] = pd.to_numeric(df_balanced['ms']).round(3)
-    df_balanced.loc[df_balanced['cat'] == 'after_deviant', 'ms'] += 0.25
-    df_balanced.loc[df_balanced['cat'] == 'standard', 'ms'] -= 0.25
+    # Ajustar valores de la columna 's'
+    df_balanced['s'] = pd.to_numeric(df_balanced['s']).round(3)
+    df_balanced.loc[df_balanced['cat'] == 'after_deviant', 's'] += 0.25
+    df_balanced.loc[df_balanced['cat'] == 'standard', 's'] -= 0.25
     
     #sys.exit()
     
-    df_balanced['ms'] = df_balanced['ms'].round(3)
+    df_balanced['s'] = df_balanced['s'].round(3)
     
     # Crear subsets de control, efecto y recuperación
     df_control = df_balanced[df_balanced['block_type'].isin(['control_block_1', 'control_block_2'])]
